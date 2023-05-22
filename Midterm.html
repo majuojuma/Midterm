@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midterm</title>
+</head>
+<body>
+    <h1>Form</h1>
+    <form>
+      <label for="entry">Entry:</label>
+      <input type="text" id="entry" name="entry" placeholder="AddEntry">
+     
+  
+      <button type="button" onclick="addEntry()">Add Entry</button>
+      <button type="button" onclick="summary()">Summary</button>
+    </form>
+  
+    <h2>Entries:</h2>
+    <div id="summary"></div>
+
+</body>
+<script>
+    function Entry(directoryId, description, duration) {
+        this.directoryId = directoryId;
+        this.description = description;
+        this.duration = duration;
+      }
+    
+      // store entries
+      var entries = [];
+    
+      // Function to add an entry
+      function addEntry() {
+        var Entry = document.querySelector("#entry").value.trim();
+    
+        if (Entry === "") {
+          alert("Invalid entry");
+          return;
+        }
+    
+        var entryParts = Entry.split(" ");
+        if (entryParts.length !== 3) {
+          alert("Invalid entry");
+          return;
+        }
+    
+        var directoryId = entryParts[0];
+        var description = entryParts[1];
+        var duration = entryParts[2];
+    
+        var entry = new Entry(directoryId, description, duration);
+        entries.push(entry);
+    
+        document.querySelector("#entry").value = "";
+      }
+    
+      // fn display summary
+      function summary() {
+        var summaryText = "Total entries: " + entries.length + "\n\n";
+    
+        // Sort duration
+        entries.sort(function(a, b) {
+          return a.duration - b.duration;
+        });
+    
+        for (var i = 0; i < entries.length; i++) {
+          var entry = entries[i];
+          summaryText += "Directory ID: " + entry.directoryId + ", Description: " + entry.description + ", Duration: " + entry.duration + "\n";
+        }
+    
+        document.querySelector("#summary").textContent = summaryText;
+      }
+    
+</script>
+
+</html>
